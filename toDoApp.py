@@ -7,7 +7,7 @@ tasks = []  # global task list
 
 def add_task(task):
     """Add a non-empty task to the list."""
-    if task:  # check if task is not empty
+    if task:  #check if task is not empty
         tasks.append(task)
         print(f'Task "{task}" added.')
     else:
