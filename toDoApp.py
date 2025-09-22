@@ -25,13 +25,15 @@ def show_tasks():
 
 
 def remove_task(task_number):
-    """Remove a task from the list by its number."""
-    try:
-        index = task_number - 1  # convert to 0-based index
-        removed = tasks.pop(index)
-        print(f'Task "{removed}" removed.')
-    except (IndexError, ValueError):
+    """Remove a task by its 1-based index with validation."""
+    if not isinstance(task_number, int):
+        print("Task number must be an integer.")
+        return
+    if task_number < 1 or task_number > len(tasks):
         print("Invalid task number.")
+        return
+    removed = tasks.pop(task_number - 1)
+    print(f"Removed task: {removed}")
 
 
 def main():
@@ -51,10 +53,15 @@ def main():
             show_tasks()
         elif choice == "3":
             try:
-                task_number = int(input("Enter task number to remove: "))
-                remove_task(task_number)
+                n = int(input("Enter task number to remove: ").strip())
             except ValueError:
-                print("Please enter a valid number.")
+                print("Please enter a valid integer.")
+                continue
+            confirm = input(f"Are you sure you want to delete task #{n}? (y/N): ").strip().lower()
+            if confirm != "y":
+                print("Deletion cancelled.")
+                continue
+            remove_task(n)
         elif choice == "4":
             print("Goodbye!")
             break
